@@ -1,5 +1,5 @@
 'use strict';
-
+/*
 const bookings = [];
 
 const createBooking = function (
@@ -206,3 +206,88 @@ const addTaxRate = function (rate) {
 const addVAT2 = addTaxRate(0.23);
 console.log(addVAT2(100));
 console.log(addVAT2(23));
+*/
+
+/**IIFE Inmediate Invoke Function Expression */
+
+/*const runOnce = function () {
+  console.log('This will never run again');
+};
+runOnce();
+
+//IIFE
+(function () {
+  console.log('This will never run again');
+})();
+
+//Otra manera
+(() => console.log('This will ALSO never run again'))();
+
+{
+  const isPrivate = 23;
+  var notPrivate = 46;
+}
+//No es visible
+console.log(isPrivate);
+console.log(notPrivate);*/
+
+/** -----------------Clousures ----------- */
+
+/*const secureBooking = function () {
+  let passengerCount = 0;
+
+  return function () {
+    passengerCount++;
+    console.log(`${passengerCount} passengers`);
+  };
+};
+
+const booker = secureBooking();
+
+booker();
+booker();
+booker();*/
+
+// Example 1
+/*let f;
+
+const g = function () {
+  const a = 23;
+  f = function () {
+    console.log(a + 2);
+  };
+};
+
+const h = function () {
+  const b = 777;
+  f = function () {
+    console.log(b * 2);
+  };
+};
+
+g();
+f();
+
+// Re-assigning f funcion. Vuelve a chafar el valor del clousure.
+h();
+f();
+
+console.dir(f);
+console.dir(g);
+*/
+
+// Example 2
+const boardPassengers = function (n, wait) {
+  const perGroup = n / 3;
+
+  setTimeout(function () {
+    console.log(`Wer ar now boarding all ${n} passengers`);
+    console.log(`There are 3 groups, each with ${perGroup} passengers`);
+  }, wait * 1000);
+
+  console.log(`Will start boarding in ${wait} seconds`);
+};
+
+//El clousure tiene preferencia sobre el scope general.
+const perGroup = 1000;
+boardPassengers(180, 3);
