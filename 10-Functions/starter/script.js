@@ -277,7 +277,7 @@ console.dir(g);
 */
 
 // Example 2
-const boardPassengers = function (n, wait) {
+/*const boardPassengers = function (n, wait) {
   const perGroup = n / 3;
 
   setTimeout(function () {
@@ -291,3 +291,4 @@ const boardPassengers = function (n, wait) {
 //El clousure tiene preferencia sobre el scope general.
 const perGroup = 1000;
 boardPassengers(180, 3);
+*/
