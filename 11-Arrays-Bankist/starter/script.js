@@ -106,7 +106,7 @@ console.log(arr.slice(1, -2)); //b,c
 console.log(arr.slice()); //a,b,c,d,e
 console.log([...arr]); //a,b,c,d,e
 
-//SPLIE
+//SPLICE
 //console.log(arr.splice(2)); //elimina c,d,e y deja el arr con el resto.
 arr.splice(-1); // elimina e, y deja a,b,c,d en arr
 console.log(arr); //a,b,c,d
