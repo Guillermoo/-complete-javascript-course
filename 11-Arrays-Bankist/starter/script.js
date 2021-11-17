@@ -72,7 +72,7 @@ const displayMovements = function (movements) {
       <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
-      <div class="movements__value">${mov}</div>
+      <div class="movements__value">${mov}€</div>
     </div>
     `;
 
@@ -81,6 +81,49 @@ const displayMovements = function (movements) {
 };
 
 displayMovements(account1.movements);
+
+const calcDisplayBalance = function (movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${balance}€`;
+};
+
+calcDisplayBalance(account1.movements);
+
+//Modifica el objeto acc(que es una variable global)
+const createUsername = function (accs) {
+  accs.forEach(function (acc) {
+    acc.username = acc.owner
+      .toLocaleLowerCase()
+      .split(' ')
+      .map(name => name[0])
+      .join('');
+  });
+};
+createUsername(accounts);
+
+const calcDisplaySummary = function (movements) {
+  const incomes = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `${incomes}€`;
+
+  const outcomes = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumOut.textContent = `${Math.abs(outcomes)}€`;
+
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(deposit => (deposit * 1.2) / 100)
+    .filter((int, i, arr) => {
+      console.log(arr);
+      return int >= 1;
+    })
+    .reduce((acc, int) => acc + int, 0);
+
+  labelSumInterest.textContent = `${interest}€`;
+};
+calcDisplaySummary(account1.movements);
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -172,3 +215,102 @@ currenciesUnique.forEach(function (value, key, map) {
   console.log(`${key}: ${value}`); //EUR: EUR, key  y value es lo mismo.
 });
 */
+
+const eurToUsd = 1.1;
+
+/*
+//------------------------ MAP ---------------
+
+Map devuelve un nuevo array, no modifica el array inicial
+const movementsUSD = movements.map(function (mov) {
+  return mov * eurToUsd;
+});
+
+// Con arrow function lo petas, es lo mimso que lo anterior
+const movementsUSD = movements.map(mov => mov * eurToUsd);
+
+console.log(movements);
+console.log(movementsUSD);
+
+//Esto mismo es lo que hace map, pero es mas lioso.
+const movementsUDSfor = [];
+for (const mov of movements) movementsUDSfor.push(mov * eurToUsd);
+console.log(movementsUDSfor);
+
+const movementsDescriptions = movements.map(
+  (mov, i) =>
+    `Movement ${i + 1}: You ${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(
+      mov
+    )}`
+);
+console.log(movementsDescriptions);
+
+const user = 'Steven Thomas Williams'; //username: stw
+
+//Modifica el objeto acc(que es una variable global)
+const createUsername = function (accs) {
+  accs.forEach(function (acc) {
+    acc.username = acc.owner
+      .toLocaleLowerCase()
+      .split(' ')
+      .map(name => name[0])
+      .join('');
+  });
+};
+createUsername(accounts);
+
+console.log(accounts);
+*/
+/*
+// --------------- FILTER ----------------------- 
+// ¡¡MAGIA!!
+const deposits = movements.filter(function (mov) {
+  return mov > 0;
+});
+
+console.log(movements);
+console.log(deposits);
+
+// Lo mismo que con filter. A parte de ser mas engorroso, filter es una fución  y por lo tanto permite anidar métodos.
+const depositsFor = [];
+for (const mov of movements) if (mov > 0) depositsFor.push(mov);
+
+console.log(depositsFor);
+
+const withdrawls = movements.filter(mov => mov < 0);
+console.log(withdrawls);
+*/
+
+//console.log(movements);
+
+/*
+// ---------------------  REDUCE -------------------------
+// acumulator -> SNOWBALL
+// Se devuelve el acc mas la suma
+const balance = movements.reduce((acc, cur) => acc + cur, 0); //0 es el valor al que se empieza
+console.log(balance);
+
+// Lo mismo pero usando for of
+let balance2 = 0;
+for (const mov of movements) balance2 += mov;
+console.log(balance2);
+*/
+/*
+// Maximum value
+const maxValue = movements.reduce((acc, mov) => {
+  if (acc > mov) return acc;
+  else return mov;
+}, movements[0]);
+console.log(maxValue);
+*/
+
+// PIPELINE
+const totalDepositsUSD = movements
+  .filter(mov => mov > 0)
+  // .map(mov => mov * eurToUsd)
+  .map((mov, i, arr) => {
+    console.log(arr);
+    return mov * eurToUsd;
+  })
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(totalDepositsUSD);
