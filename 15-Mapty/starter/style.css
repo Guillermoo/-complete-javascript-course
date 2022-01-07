@@ -218,3 +218,65 @@ a:visited {
 .cycling-popup .leaflet-popup-content-wrapper {
   border-left: 5px solid var(--color-brand--1);
 }
+
+/* Button Controls  */
+
+.workout__title--container {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.workout__controls button {
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+  border: none;
+  margin-left: 0.5rem;
+  background-color: #52595e;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  outline: none;
+  transition: all 100ms;
+}
+
+.fa,
+.far,
+.fas {
+  font-family: 'Font Awesome 5 Free';
+}
+
+.fab,
+.far {
+  font-weight: 400;
+}
+
+.fa,
+.fab,
+.fad,
+.fal,
+.far,
+.fas {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+}
+
+.fa-edit:before {
+  content: '\f044';
+}
+
+.fa-trash-alt:before {
+  content: '\f2ed';
+}
+
+.workout__selected {
+  /* transform: perspective(500px) translate(10px, 0, 20px) rotateY(3deg); */
+  background-color: blue;
+}

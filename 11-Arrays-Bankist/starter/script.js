@@ -61,10 +61,13 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = '';
 
-  movements.forEach(function (mov, i) {
+  //El método slice nos permite crear una copia del array, asi no modificamos el array que estamos iterando
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const html = `
@@ -80,14 +83,10 @@ const displayMovements = function (movements) {
   });
 };
 
-displayMovements(account1.movements);
-
-const calcDisplayBalance = function (movements) {
-  const balance = movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${balance}€`;
+const calcDisplayBalance = function (acc) {
+  acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${acc.balance}€`;
 };
-
-calcDisplayBalance(account1.movements);
 
 //Modifica el objeto acc(que es una variable global)
 const createUsername = function (accs) {
@@ -101,29 +100,130 @@ const createUsername = function (accs) {
 };
 createUsername(accounts);
 
-const calcDisplaySummary = function (movements) {
-  const incomes = movements
+const calcDisplaySummary = function (acc) {
+  const incomes = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
   labelSumIn.textContent = `${incomes}€`;
 
-  const outcomes = movements
+  const outcomes = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
   labelSumOut.textContent = `${Math.abs(outcomes)}€`;
 
-  const interest = movements
+  const interest = acc.movements
     .filter(mov => mov > 0)
-    .map(deposit => (deposit * 1.2) / 100)
+    .map(deposit => (deposit * acc.interestRate) / 100)
     .filter((int, i, arr) => {
-      console.log(arr);
       return int >= 1;
     })
     .reduce((acc, int) => acc + int, 0);
 
   labelSumInterest.textContent = `${interest}€`;
 };
-calcDisplaySummary(account1.movements);
+
+const updateUI = function (acc) {
+  // Display movements
+  displayMovements(acc.movements);
+
+  // Display summary
+  calcDisplaySummary(acc);
+  // Display balance
+  calcDisplayBalance(acc);
+};
+
+let currentAccount;
+
+// Event Handler
+btnLogin.addEventListener('click', function (e) {
+  // Prevent form from submitting
+  e.preventDefault();
+
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+
+  //El interrogante era para evaluar si existía el valor
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    // Display UI and message
+    labelWelcome.textContent = `Welcome back, ${
+      currentAccount.owner.split(' ')[0]
+    }`;
+    containerApp.style.opacity = 100;
+
+    //Clear Input Fields
+    inputLoginUsername.value = inputLoginPin.value = '';
+    inputLoginPin.blur();
+
+    updateUI(currentAccount);
+  }
+});
+
+/**--------------- 159 -----------  */
+
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(
+    acc => acc.username === inputTransferTo.value
+  );
+  //console.log(amount, receiverAcc);
+
+  inputTransferAmount.value = inputTransferTo.valued = '';
+
+  if (
+    amount > 0 &&
+    receiverAcc &&
+    currentAccount.balance >= amount &&
+    receiverAcc?.username !== currentAccount.username
+  ) {
+    //Doing the transfer
+    currentAccount.movements.push(-amount);
+    receiverAcc.movements.push(amount);
+    console.log(receiverAcc);
+    updateUI(currentAccount);
+  }
+});
+
+/* -------------160 -----------*/
+
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  if (
+    inputCloseUsername.value === currentAccount.username &&
+    Number(inputClosePin.value) === Number(currentAccount.pin)
+  ) {
+    const index = accounts.findIndex(
+      // con indexOf ahcemos algo parecido, pero le podemos meter una función.
+      acc => acc.username === currentAccount.username
+    );
+
+    // Delete account
+    accounts.splice(index, 1);
+
+    // Hide UI
+    containerApp.style.opacity = 0;
+
+    labelWelcome.textContent = `Log in to get started`;
+  }
+});
+
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  const amount = Number(inputLoanAmount.value);
+
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    //Add movement
+    currentAccount.movements.push(amount);
+
+    //Update UI
+    updateUI(currentAccount);
+
+    inputLoanAmount.value = '';
+  }
+});
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -135,6 +235,7 @@ const currencies = new Map([
   ['GBP', 'Pound sterling'],
 ]);
 
+//Ejemplo de array para trabajar
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
@@ -303,7 +404,7 @@ const maxValue = movements.reduce((acc, mov) => {
 }, movements[0]);
 console.log(maxValue);
 */
-
+/*
 // PIPELINE
 const totalDepositsUSD = movements
   .filter(mov => mov > 0)
@@ -314,3 +415,252 @@ const totalDepositsUSD = movements
   })
   .reduce((acc, mov) => acc + mov, 0);
 console.log(totalDepositsUSD);
+*/
+
+/**----------- 157 ---------------- */
+
+/*const firstWithdrawal = movements.find(mov => mov < 0);
+console.log(movements);
+// Devuelve un único valor, en este caso el primer elmto que cumple esa función
+console.log(firstWithdrawal);
+
+console.log(accounts);
+
+const account = accounts.find(acc => acc.owner === 'Jessica Davis');
+console.log(account);
+*/
+/**------------------ 158 ---------------- */
+/*
+let currentAccount;
+
+// Event Handler
+btnLogin.addEventListener('click', function (e) {
+  // Prevent form from submitting
+  e.preventDefault();
+
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+
+  //El interrogante era para evaluar si existía el valor
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    // Display UI and message
+    labelWelcome.textContent = `Welcome back, ${
+      currentAccount.owner.split(' ')[0]
+    }`;
+    containerApp.style.opacity = 100;
+
+    //Clear Input Fields
+    inputLoginUsername.value = inputLoginPin.value = '';
+    inputLoginPin.blur();
+
+    // Display movements
+    displayMovements(currentAccount.movements);
+
+    // Display balance
+    calcDisplayBalance(currentAccount.movements);
+
+    // Display summary
+    calcDisplaySummary(currentAccount);
+  }
+});
+*/
+
+/** ------------------- 161 ------------- */
+/*
+console.log(movements.includes(-130)); // Sólo devuelve true si el valor coincide en el array
+
+// -------- SOME -----
+// Con SOME podemos hace cualquier tipo de condición
+const anyDepostis = movements.some(mov => mov > 5000);
+// Esto es lo que hace includes
+const anyDepostis2 = movements.some(mov => (mov = -130));
+
+// ------- EVERY -----
+console.log(account4.movements.every(mov => mov > 0)); //La ucenta tiene todos positivos
+
+// Separate callback
+const deposit = mov => mov > 0;
+
+console.log(movements.some(deposit));
+console.log(movements.every(deposit));
+console.log(movements.filter(deposit));
+*/
+
+/** ---------------- 162 ------------ */
+/*
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr.flat());
+
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+console.log(arrDeep.flat()); //Sólo entrará al primer nivel, (6) [Array(2), 3, 4, Array(2), 7, 8]
+console.log(arrDeep.flat(2)); //Así si; (8) [1, 2, 3, 4, 5, 6, 7, 8]
+
+const accountMovements = accounts.map(acc => acc.movements);
+console.log(accountMovements);
+
+const AllMovements = accountMovements.flat();
+console.log(AllMovements);
+
+const overalBalance = AllMovements.reduce((acc, mov) => acc + mov, 0);
+console.log(overalBalance);
+
+// Mejor si anidamos toda esa operación en una sola función
+const overalBalance2 = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, mov) => acc + mov, 0);
+
+console.log(overalBalance2);
+
+// O aun mejor. Aunque sólo hace flat a un nivel. Si hace falt amas mejor separar. flat(2)
+const overalBalance3 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, mov) => acc + mov, 0);
+
+console.log(overalBalance3);
+*/
+
+/** ------------------------- 163 ----------------- */
+/*
+const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
+console.log(owners.sort()); //(4) ['Adam', 'Jonas', 'Martha', 'Zach']
+console.log(owners); // Ojo que modifica el array //(4) ['Adam', 'Jonas', 'Martha', 'Zach']
+
+//Numbers
+console.log(movements);
+console.log(movements.sort()); // Sólo ordena strings, no números: (8) [-130, -400, -650, 1300, 200, 3000, 450, 70]
+
+// return < 0; A,B
+// return > 0; B,A
+movements.sort((a, b) => {
+  if (a > b) return 1; //switch order 450 > -400 -> cambiar orden -400,450
+  if (b > a) return -1; // keep order
+});
+
+console.log(movements);
+
+// LO mismo que antes pero en modo chungo
+movements.sort((a, b) => a - b);
+console.log(movements);
+
+//Nos dice si el listado está ordenado
+let sorted = false;
+
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
+});*/
+
+/** ------------------ 164 --------------- */
+/*
+const arr = [1, 2, 3, 4, 5, 6, 7, 8];
+
+console.log(new Array(1, 2, 3, 4, 5, 6, 7));
+
+const x = new Array(7); //(7) [empty × 7]
+console.log(x);
+
+console.log(x.map(() => 5)); // No se rellenan los elmtos
+
+//console.log(x.fill(1)); //[1, 1, 1, 1, 1, 1, 1]
+
+//Si ya hay datos metidos no hace nada.
+console.log(x.fill(1, 3, 5));
+
+arr.fill(23, 2, 6); //(8) [1, 2, 23, 23, 23, 23, 7]
+console.log(arr);
+
+// Array.from. Para rellenar de manera manual el array en vez de New Array y x.fill
+const y = Array.from({ length: 7 }, () => 1);
+console.log(y); //(7) [1, 1, 1, 1, 1, 1, 1]
+
+const z = Array.from({ length: 7 }, (_, i) => i + 1);
+console.log(z); //(7) [1, 2, 3, 4, 5, 6, 7]
+
+labelBalance.addEventListener('click', function () {
+  const movementsUI = Array.from(
+    document.querySelectorAll('.movements__value'),
+    el => Number(el.textContent.replace('€', ''))
+  );
+
+  console.log(movementsUI);
+
+  // Otra manera de crear el array con los valores, pero mejor la otra manera
+  const movementsUI2 = [...document.querySelectorAll('.movements__value')];
+
+  console.log(movementsUI2);
+});
+*/
+
+/** --------------- 166 ----------------- */
+
+// Array methods Practice
+/*
+// const bankDepositSum = accounts.map(acc => acc.movements).flat();
+// const bankDepositSum = accounts.flatMap(acc => acc.movements);
+const bankDepositSum = accounts
+  .flatMap(acc => acc.movements)
+  .filter(mov => mov > 0)
+  .reduce((sum, cur) => sum + cur, 0);
+
+console.log(bankDepositSum);
+
+// 2. Count hwo many depostivs with at least 1000€
+
+const numDeposits1000 = accounts
+  .flatMap(acc => acc.movements)
+  .filter(mov => mov >= 1000).length;
+
+console.log(numDeposits1000);
+s
+
+// Otra manera de hacerlo.
+const numDeposits1000 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((count, cur) => (cur >= 1000 ? count + 1 : count), 0);
+
+//Ojo que no usamos count++. Explicacion
+let a = 10;
+console.log(a++); // 10. ++ devuelve el valor anterior a incrementarlo
+console.log(a); // 11
+//Una soución sería
+console.log(++a); // 12. ++ devuelve el valor anterior a incrementarlo
+
+console.log(numDeposits1000);
+
+// 3.
+//Create an object with the withdraw an deposit
+
+const { deposits, withdrawals } = accounts
+  .flatMap(acc => acc.movements)
+  .reduce(
+    (sums, cur) => {
+      //cur > 0 ? (sums.deposits += cur) : (sums.withdrawals += cur);
+      sums[cur > 0 ? 'deposits' : 'withdrawals'] += cur; // Otra manera mas cool de hacerlo
+      return sums;
+    },
+    { deposits: 0, withdrawals: 0 }
+  );
+
+console.log(deposits, withdrawals);
+
+// 4.
+// Create a simple function to convert string to title case
+const convertTitleCase = function (title) {
+  const capitalize = str => str[0].toUpperCase() + str.slice(1);
+
+  const exceptions = ['a', 'an', 'and', 'the', 'but', 'or', 'on', 'in', 'with'];
+  const titleCase = title
+    .toLowerCase()
+    .split(' ')
+    .map(word => (exceptions.includes(word) ? word : capitalize(word)))
+    .join(' ');
+
+  return capitalize(titleCase); //Volvemos a llamar a la funcion porque si una frase empieza con una excepción no la capitalizará.
+};
+console.log(convertTitleCase('this is a nice title'));
+console.log(convertTitleCase('this is a LONG title but not too long'));
+console.log(convertTitleCase('and here is another title with an EXAMPLE'));
+*/
