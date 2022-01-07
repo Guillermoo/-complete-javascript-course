@@ -53,7 +53,6 @@ const getdataLocation = function (coords) {
         `;
       console.log(msg);
     })
-
     //4
     .catch(error => console.log('Error: ', error));
 };
