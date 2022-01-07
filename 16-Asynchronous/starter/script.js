@@ -3,7 +3,8 @@
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
-const renderCountryyy = function (data, className = '') {
+const renderCountry = function (data, className = '') {
+  console.log(data);
   const html = `
           <article class="country ${className}">
           <img class="country__img" src="${data.flags.png}" />
@@ -14,7 +15,7 @@ const renderCountryyy = function (data, className = '') {
             +data.population / 1000000
           ).toFixed(1)}</p>
               <p class="country__row"><span>🗣️</span>${
-                Object.values(data.languages)[0].name
+                Object.values(data.languages)[0]
               }</p>
               <p class="country__row"><span>💰</span>${
                 Object.values(data.currencies)[0].name
@@ -22,7 +23,6 @@ const renderCountryyy = function (data, className = '') {
               </div>
               </article>
               `;
-
   countriesContainer.insertAdjacentHTML('beforeend', html);
 
   // countriesContainer.style.opacity = 1;
@@ -149,7 +149,7 @@ const getCountryData = function (country) {
       );
     })
 
-    .then(data => renderCountry(data, 'neighbour'))
+    .then(data => renderCountry(data[0], 'neighbour'))
     .catch(err => {
       //este catch es como el handle en el then, pero global. Para cuando est'an encadeandos.
       console.error(`${err}`);
@@ -161,9 +161,9 @@ const getCountryData = function (country) {
     });
 };
 
-btn.addEventListener('click', function () {
-  getCountryData('portugal');
-});
+// btn.addEventListener('click', function () {
+//   getCountryData('portugal');
+// });
 
 //En esta version hay mucho codigo duplicado con los response, la version de arriba es la optimizada
 // const getCountryDataSinOpt = function (country) {
@@ -211,4 +211,4 @@ btn.addEventListener('click', function () {
 //   getCountryData('portugal');
 // });
 
-getCountryData('sd32thsh');
+//getCountryData('portugal');

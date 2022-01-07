@@ -27,12 +27,10 @@ Test data:
 GOOD LUCK 😀
 */
 
-const btn = document.querySelector('.btn-country');
-
 btn.addEventListener('click', function () {
-  whereAmI(52.508, 'a13.381');
-  //   whereAmI(19.037, 72.873);
-  //   whereAmI(-33.933, 18.474);
+  whereAmI(52.508, '13.381');
+  whereAmI(19.037, 72.873);
+  whereAmI(-33.933, 18.474);
 });
 
 //2
@@ -42,19 +40,30 @@ const getdataLocation = function (coords) {
       //console.log(response.json());
       if (response.status === 403)
         throw new Error(`Too many request, Status code: ${response.status}`);
-
+      if (response.type === 'error')
+        throw new Error(
+          `Houston tenemos un problema, Status code: ${response.status}`
+        );
       return response.json();
     })
     .then(data => {
-      console.log(data);
+      if (!data) throw new Error(`No encontramos nada: ${response.status}`);
+
       //3
       const msg = `
-        Your are in ${data.region}, ${data.country}
+        Your are in ${data.city}, ${data.country}
         `;
       console.log(msg);
+      // console.log(data.country);
+
+      getCountryData(data.country);
+      //getCountryData(data.country);
+      //renderCountry(data);
+
+      // console.log(msg);
     })
     //4
-    .catch(error => console.log('Error: ', error));
+    .catch(err => console.error('Error catch: ', err.message));
 };
 
 //1
