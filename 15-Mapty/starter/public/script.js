@@ -1,5 +1,23 @@
 'use strict';
 
+// // Import the functions you need from the SDKs you need
+// import { initializeApp } from 'firebase/app';
+// // TODO: Add SDKs for Firebase products that you want to use
+// // https://firebase.google.com/docs/web/setup#available-libraries
+
+// // Your web app's Firebase configuration
+// const firebaseConfig = {
+//   apiKey: 'AIzaSyC1dogMrZ-F_vcSBUFjJqa48CWaapxmN8A',
+//   authDomain: 'mapty-d8d5e.firebaseapp.com',
+//   projectId: 'mapty-d8d5e',
+//   storageBucket: 'mapty-d8d5e.appspot.com',
+//   messagingSenderId: '664784009436',
+//   appId: '1:664784009436:web:01808877856b6e94d71c19',
+// };
+
+// Initialize Firebase
+//const app = initializeApp(firebaseConfig);
+
 class Workout {
   date = new Date();
   id = (Date.now() + '').slice(-10); //Creamos un id en funcion de la hora para ahorrarnos generarlo con una libreria
