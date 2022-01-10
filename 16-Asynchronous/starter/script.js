@@ -124,42 +124,42 @@ getCountryDataAndNeighbour('usa');
 //     });
 // };
 
-const getJSON = function (url, errorMsg = 'Something went wrong') {
-  return fetch(url).then(response => {
-    if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
+// const getJSON = function (url, errorMsg = 'Something went wrong') {
+//   return fetch(url).then(response => {
+//     if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
 
-    return response.json();
-  });
-};
+//     return response.json();
+//   });
+// };
 
-// Es lo mismo que lo anterior, pero en plan reducido.
-const getCountryData = function (country) {
-  //Country 1
-  getJSON(`https://restcountries.com/v3.1/name/${country}`, 'Country not found')
-    .then(data => {
-      //data es lo que vuelve el anterior then
-      renderCountry(data[0]);
-      const neighbour = data[0].borders;
-      if (!neighbour) throw new Error('No neighbour found');
+// // Es lo mismo que lo anterior, pero en plan reducido.
+// const getCountryData = function (country) {
+//   //Country 1
+//   getJSON(`https://restcountries.com/v3.1/name/${country}`, 'Country not found')
+//     .then(data => {
+//       //data es lo que vuelve el anterior then
+//       renderCountry(data[0]);
+//       const neighbour = data[0].borders;
+//       if (!neighbour) throw new Error('No neighbour found');
 
-      // Country 2
-      return getJSON(
-        `https://restcountries.com/v3.1/alpha/${neighbour[0]}`,
-        'Country neighbourg not found'
-      );
-    })
+//       // Country 2
+//       return getJSON(
+//         `https://restcountries.com/v3.1/alpha/${neighbour[0]}`,
+//         'Country neighbourg not found'
+//       );
+//     })
 
-    .then(data => renderCountry(data[0], 'neighbour'))
-    .catch(err => {
-      //este catch es como el handle en el then, pero global. Para cuando est'an encadeandos.
-      console.error(`${err}`);
-      renderError(`Something went wrong ${err.message}. Try again!`);
-    })
-    .finally(() => {
-      // Siempre se ejecutara pase lo que pase(error o no)
-      countriesContainer.style.opacity = 1;
-    });
-};
+//     .then(data => renderCountry(data[0], 'neighbour'))
+//     .catch(err => {
+//       //este catch es como el handle en el then, pero global. Para cuando est'an encadeandos.
+//       console.error(`${err}`);
+//       renderError(`Something went wrong ${err.message}. Try again!`);
+//     })
+//     .finally(() => {
+//       // Siempre se ejecutara pase lo que pase(error o no)
+//       countriesContainer.style.opacity = 1;
+//     });
+// };
 
 // btn.addEventListener('click', function () {
 //   getCountryData('portugal');
@@ -212,3 +212,80 @@ const getCountryData = function (country) {
 // });
 
 //getCountryData('portugal');
+
+//////////////// The event loop //////////////////
+//////////////////////////////////////////////
+// console.log('Test start');
+
+// setTimeout(() => console.log('0 sec timer'), 0);
+
+// Promise.resolve('Resolver promise 1').then(res => console.log(res));
+
+// Promise.resolve('Resolver promise 2').then(res => {
+//   for (let i = 0; i < 10000000000; i++) {}
+//   console.log(res);
+// });
+// console.log('Test end');
+
+//La microtask se ejecuta primero y el resto tiene que esperar. Por eso se ejecuta antes las promises que el setTimeout
+//Test start
+// script.js:228 Test end
+// script.js:222 Resolver promise 1
+// script.js:226 Resolver promise 2
+// script.js:220 0 sec timer;
+/////////////  Create promises ////////////////////////////
+///////////////////////////////////////////////////
+// Manejar errores
+/* const lotteryPromise = new Promise(function (resolve, reject) {
+  console.log('Lottery draw is happenning');
+  setTimeout(() => {
+    if (Math.random() >= 0.5) {
+      resolve('You WIN '); //Esto es lo que devolvera el primer then.
+    } else {
+      reject(new Error('You lost your money')); // En el catch saldra en el error
+    }
+  }, 2000);
+});
+
+lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
+
+// Promisifying setTimeout
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    // No ponemos reject porqeu el temporizador nunca va a fallar
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+wait(1)
+  .then(() => {
+    console.log('1 second passed');
+    // Todo el codigoq ue uqeramos tras 2 seg
+    return wait(1);
+  })
+  .then(() => {
+    console.log('2 second passed');
+    // Todo el codigoq ue uqeramos tras 2 seg
+    return wait(1);
+  })
+  .then(() => {
+    console.log('3 second passed');
+    // Todo el codigoq ue uqeramos tras 2 seg
+    return wait(1);
+  })
+  .then(() => console.log('4 second passed'));
+
+Promise.resolve('asdc').then(x => console.log(x));
+Promise.reject(new Error('Problem')).catch(x => console.log(x));
+
+// Lo que se ejecutra del c'odigo anterior.
+
+// Lottery draw is happenning
+// script.js:278 asdc
+// script.js:279 Error: Problem at script.js:279
+// script.js:262 1 second passed
+// script.js:250 You WIN
+// script.js:267 2 second passed
+// script.js:272 3 second passed
+// script.js:276 4 second passed
+ */
