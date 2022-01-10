@@ -124,42 +124,42 @@ getCountryDataAndNeighbour('usa');
 //     });
 // };
 
-// const getJSON = function (url, errorMsg = 'Something went wrong') {
-//   return fetch(url).then(response => {
-//     if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
+const getJSON = function (url, errorMsg = 'Something went wrong') {
+  return fetch(url).then(response => {
+    if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
 
-//     return response.json();
-//   });
-// };
+    return response.json();
+  });
+};
 
 // // Es lo mismo que lo anterior, pero en plan reducido.
-// const getCountryData = function (country) {
-//   //Country 1
-//   getJSON(`https://restcountries.com/v3.1/name/${country}`, 'Country not found')
-//     .then(data => {
-//       //data es lo que vuelve el anterior then
-//       renderCountry(data[0]);
-//       const neighbour = data[0].borders;
-//       if (!neighbour) throw new Error('No neighbour found');
+const getCountryData = function (country) {
+  //Country 1
+  getJSON(`https://restcountries.com/v3.1/name/${country}`, 'Country not found')
+    .then(data => {
+      //data es lo que vuelve el anterior then
+      renderCountry(data[0]);
+      const neighbour = data[0].borders;
+      if (!neighbour) throw new Error('No neighbour found');
 
-//       // Country 2
-//       return getJSON(
-//         `https://restcountries.com/v3.1/alpha/${neighbour[0]}`,
-//         'Country neighbourg not found'
-//       );
-//     })
+      // Country 2
+      return getJSON(
+        `https://restcountries.com/v3.1/alpha/${neighbour[0]}`,
+        'Country neighbourg not found'
+      );
+    })
 
-//     .then(data => renderCountry(data[0], 'neighbour'))
-//     .catch(err => {
-//       //este catch es como el handle en el then, pero global. Para cuando est'an encadeandos.
-//       console.error(`${err}`);
-//       renderError(`Something went wrong ${err.message}. Try again!`);
-//     })
-//     .finally(() => {
-//       // Siempre se ejecutara pase lo que pase(error o no)
-//       countriesContainer.style.opacity = 1;
-//     });
-// };
+    .then(data => renderCountry(data[0], 'neighbour'))
+    .catch(err => {
+      //este catch es como el handle en el then, pero global. Para cuando est'an encadeandos.
+      console.error(`${err}`);
+      renderError(`Something went wrong ${err.message}. Try again!`);
+    })
+    .finally(() => {
+      // Siempre se ejecutara pase lo que pase(error o no)
+      countriesContainer.style.opacity = 1;
+    });
+};
 
 // btn.addEventListener('click', function () {
 //   getCountryData('portugal');
@@ -289,3 +289,72 @@ Promise.reject(new Error('Problem')).catch(x => console.log(x));
 // script.js:272 3 second passed
 // script.js:276 4 second passed
  */
+
+///////////// Promisifying Geolocatio API ////////////
+//////////////////////////////////////////////////
+
+// navigator.geolocation.getCurrentPosition(
+//   position => console.log(position),
+//   err => console.error(err)
+// );
+
+// console.log('Getting position'); // Se ejecutara antes que el getCurrentPosition
+
+//1
+const whereAmI = function () {
+  getPosition()
+    .then(pos => {
+      console.log(pos.coords);
+      const { latitude: lat, longitude: lng } = pos.coords;
+
+      //      const { lat = latitude, lng = longitude } = pos.coords;
+      console.log(lat, lng);
+      return fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+    })
+    .then(response => {
+      //console.log(response.json());
+      if (response.status === 403)
+        throw new Error(`Too many request, Status code: ${response.status}`);
+      if (response.type === 'error')
+        throw new Error(
+          `Houston tenemos un problema, Status code: ${response.status}`
+        );
+      return response.json();
+    })
+    .then(data => {
+      if (!data) throw new Error(`No encontramos nada: ${response.status}`);
+
+      //3
+      const msg = `
+      Your are in ${data.city}, ${data.country}
+      `;
+      console.log(msg);
+      // console.log(data.country);
+
+      getCountryData(data.country);
+      //getCountryData(data.country);
+      //renderCountry(data);
+
+      // console.log(msg);
+    })
+    //4
+    .catch(err => console.error('Error catch: ', err.message));
+
+  //   console.log(getCountry.json());
+};
+
+btn.addEventListener('click', whereAmI);
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    // Esta es la manera sin acortar
+    // navigator.geolocation.getCurrentPosition(
+    //   position => resolve(position), // devolvera la posicion en el then
+    //   err => reject(err)
+    // );
+
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+getPosition().then(pos => console.log(pos));
