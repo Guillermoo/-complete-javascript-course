@@ -1,5 +1,5 @@
 'use strict';
-
+const imagesContainer = document.querySelector('.images');
 /* 
 Asynchronous JavaScript Coding Challenge #1 
 
@@ -27,7 +27,7 @@ Test data:
 GOOD LUCK 😀
 */
 
-const btn = document.querySelector('.btn-country');
+/* const btn = document.querySelector('.btn-country');
 
 btn.addEventListener('click', function () {
   //whereAmI(52.508, '13.381');
@@ -64,7 +64,7 @@ const whereAmI = function (lat, lng) {
   const coords = [lat, lng];
   getdataLocation(coords);
   //   console.log(getCountry.json());
-};
+}; */
 
 /* Coding Challenge #2
 For this challenge you will actually have to watch the video! Then, build the image loading functionality that I just  howed you on the screen.
@@ -85,8 +85,60 @@ PART 2
 6. After the 2 seconds have passed, hide the current image (set display CSS property to 'none'), and load a second image (Hint: Use the image element returned by the 'createImage' promise to hide the current image. You will need a global variable for that 😉)
 7. After the second image has loaded, pause execution for 2 seconds again
 8. After the 2 seconds have passed, hide the current image
-Test data: Images in the img folder. Test the error handler by passing a wrong image path. Set the network speed to “Fast 3G” in the dev tools Network tab, otherwise images load too fast
+
+Test data: 
+Images in the img folder. 
+Test the error handler by passing a wrong image path. 
+Set the network speed to “Fast 3G” in the dev tools Network tab, otherwise images load too fast.
 
 GOOD LUCK 😀
 
 */
+
+let imageWaiting;
+
+// Promisifying setTimeout
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    // No ponemos reject porqeu el temporizador nunca va a fallar
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+//1
+const createImage = function (imgPath) {
+  return new Promise(function (resolve, reject) {
+    const img = document.createElement('img');
+    img.src = imgPath;
+
+    img.addEventListener('load', function () {
+      imagesContainer.append(img);
+
+      resolve(img);
+    });
+    img.addEventListener('error', function () {
+      reject(new Error('Image not found'));
+    });
+  });
+};
+//console.log(createImage('img/img-1.jpg'));
+
+// ---- (4) -----
+createImage('img/img-1.jpg')
+  .then(img => {
+    imageWaiting = img;
+    return wait(2);
+  })
+  .then(() => {
+    imageWaiting.style.display = 'none';
+
+    return createImage('img/img-2.jpg'); // hay que devolver el createImage para que siga siendo un promise. Si no se cargara sin esperar a los promieses.
+  })
+  .then(img => {
+    imageWaiting = img;
+    return wait(2);
+  })
+  .then(() => {
+    imageWaiting.style.display = 'none';
+  })
+  .catch(err => console.error(err));
