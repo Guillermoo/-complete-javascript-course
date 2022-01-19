@@ -27,19 +27,12 @@ Test data:
 GOOD LUCK 😀
 */
 
-<<<<<<< HEAD
-/* btn.addEventListener('click', function () {
-  whereAmI(52.508, '13.381');
-  // whereAmI(19.037, 72.873);
-  // whereAmI(-33.933, 18.474);
-=======
 const btn = document.querySelector('.btn-country');
 
 btn.addEventListener('click', function () {
   whereAmI(52.508, 'a13.381');
   //   whereAmI(19.037, 72.873);
   //   whereAmI(-33.933, 18.474);
->>>>>>> 693f5379a7b54b8ef5a3555b1952d1f4a3de73b5
 });
 
 //2
@@ -49,32 +42,6 @@ const getdataLocation = function (coords) {
       //console.log(response.json());
       if (response.status === 403)
         throw new Error(`Too many request, Status code: ${response.status}`);
-<<<<<<< HEAD
-      if (response.type === 'error')
-        throw new Error(
-          `Houston tenemos un problema, Status code: ${response.status}`
-        );
-      return response.json();
-    })
-    .then(data => {
-      if (!data) throw new Error(`No encontramos nada: ${response.status}`);
-
-      //3
-      const msg = `
-        Your are in ${data.city}, ${data.country}
-        `;
-      console.log(msg);
-      // console.log(data.country);
-
-      getCountryData(data.country);
-      //getCountryData(data.country);
-      //renderCountry(data);
-
-      // console.log(msg);
-    })
-    //4
-    .catch(err => console.error('Error catch: ', err.message));
-=======
 
       return response.json();
     })
@@ -88,7 +55,6 @@ const getdataLocation = function (coords) {
     })
     //4
     .catch(error => console.log('Error: ', error));
->>>>>>> 693f5379a7b54b8ef5a3555b1952d1f4a3de73b5
 };
 
 //1
@@ -98,8 +64,7 @@ const whereAmI = function (lat, lng) {
   const coords = [lat, lng];
   getdataLocation(coords);
   //   console.log(getCountry.json());
-<<<<<<< HEAD
-}; */
+};
 
 /* Coding Challenge #2
 For this challenge you will actually have to watch the video! Then, build the image loading functionality that I just  howed you on the screen.
@@ -125,6 +90,3 @@ Test data: Images in the img folder. Test the error handler by passing a wrong i
 GOOD LUCK 😀
 
 */
-=======
-};
->>>>>>> 693f5379a7b54b8ef5a3555b1952d1f4a3de73b5

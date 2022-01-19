@@ -3,12 +3,8 @@
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
-<<<<<<< HEAD
 const renderCountry = function (data, className = '') {
-  console.log(data);
-=======
-const renderCountryyy = function (data, className = '') {
->>>>>>> 693f5379a7b54b8ef5a3555b1952d1f4a3de73b5
+  //console.log(data);
   const html = `
           <article class="country ${className}">
           <img class="country__img" src="${data.flags.png}" />
@@ -19,11 +15,7 @@ const renderCountryyy = function (data, className = '') {
             +data.population / 1000000
           ).toFixed(1)}</p>
               <p class="country__row"><span>🗣️</span>${
-<<<<<<< HEAD
-                Object.values(data.languages)[0]
-=======
                 Object.values(data.languages)[0].name
->>>>>>> 693f5379a7b54b8ef5a3555b1952d1f4a3de73b5
               }</p>
               <p class="country__row"><span>💰</span>${
                 Object.values(data.currencies)[0].name
@@ -31,10 +23,7 @@ const renderCountryyy = function (data, className = '') {
               </div>
               </article>
               `;
-<<<<<<< HEAD
-=======
 
->>>>>>> 693f5379a7b54b8ef5a3555b1952d1f4a3de73b5
   countriesContainer.insertAdjacentHTML('beforeend', html);
 
   // countriesContainer.style.opacity = 1;
@@ -144,11 +133,8 @@ const getJSON = function (url, errorMsg = 'Something went wrong') {
   });
 };
 
-<<<<<<< HEAD
 // // Es lo mismo que lo anterior, pero en plan reducido.
-=======
 // Es lo mismo que lo anterior, pero en plan reducido.
->>>>>>> 693f5379a7b54b8ef5a3555b1952d1f4a3de73b5
 const getCountryData = function (country) {
   //Country 1
   getJSON(`https://restcountries.com/v3.1/name/${country}`, 'Country not found')
@@ -165,35 +151,26 @@ const getCountryData = function (country) {
       );
     })
 
-<<<<<<< HEAD
     .then(data => renderCountry(data[0], 'neighbour'))
     .catch(err => {
       //este catch es como el handle en el then, pero global. Para cuando est'an encadeandos.
       console.error(`${err}`);
-      renderError(`Something went wrong ${err.message} 🔥. Try again!`);
-=======
-    .then(data => renderCountry(data, 'neighbour'))
-    .catch(err => {
-      //este catch es como el handle en el then, pero global. Para cuando est'an encadeandos.
-      console.error(`${err}`);
-      renderError(`Something went wrong ${err.message}. Try again!`);
->>>>>>> 693f5379a7b54b8ef5a3555b1952d1f4a3de73b5
-    })
-    .finally(() => {
-      // Siempre se ejecutara pase lo que pase(error o no)
-      countriesContainer.style.opacity = 1;
+      renderError(`Something went wrong ${err.message} 🔥. Try again!`).finally(
+        () => {
+          // Siempre se ejecutara pase lo que pase(error o no)
+          countriesContainer.style.opacity = 1;
+        }
+      );
     });
 };
 
-<<<<<<< HEAD
 // btn.addEventListener('click', function () {
 //   getCountryData('portugal');
 // });
-=======
+
 btn.addEventListener('click', function () {
   getCountryData('portugal');
 });
->>>>>>> 693f5379a7b54b8ef5a3555b1952d1f4a3de73b5
 
 //En esta version hay mucho codigo duplicado con los response, la version de arriba es la optimizada
 // const getCountryDataSinOpt = function (country) {
@@ -241,7 +218,6 @@ btn.addEventListener('click', function () {
 //   getCountryData('portugal');
 // });
 
-<<<<<<< HEAD
 //getCountryData('portugal');
 
 //////////////// The event loop //////////////////
@@ -389,6 +365,5 @@ const getPosition = function () {
 };
 
 getPosition().then(pos => console.log(pos));
-=======
+
 getCountryData('sd32thsh');
->>>>>>> 693f5379a7b54b8ef5a3555b1952d1f4a3de73b5
