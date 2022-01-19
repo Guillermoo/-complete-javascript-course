@@ -4,7 +4,7 @@ const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
 const renderCountry = function (data, className = '') {
-  //console.log(data);
+  console.log(data);
   const html = `
           <article class="country ${className}">
           <img class="country__img" src="${data.flags.png}" />
@@ -133,13 +133,13 @@ const getJSON = function (url, errorMsg = 'Something went wrong') {
   });
 };
 
-// // Es lo mismo que lo anterior, pero en plan reducido.
 // Es lo mismo que lo anterior, pero en plan reducido.
 const getCountryData = function (country) {
   //Country 1
   getJSON(`https://restcountries.com/v3.1/name/${country}`, 'Country not found')
     .then(data => {
       //data es lo que vuelve el anterior then
+      // console.log(data[0]);
       renderCountry(data[0]);
       const neighbour = data[0].borders;
       if (!neighbour) throw new Error('No neighbour found');
@@ -155,12 +155,11 @@ const getCountryData = function (country) {
     .catch(err => {
       //este catch es como el handle en el then, pero global. Para cuando est'an encadeandos.
       console.error(`${err}`);
-      renderError(`Something went wrong ${err.message} 🔥. Try again!`).finally(
-        () => {
-          // Siempre se ejecutara pase lo que pase(error o no)
-          countriesContainer.style.opacity = 1;
-        }
-      );
+      renderError(`Something went wrong ${err.message} 🔥. Try again!`);
+    })
+    .finally(() => {
+      // Siempre se ejecutara pase lo que pase(error o no)
+      countriesContainer.style.opacity = 1;
     });
 };
 
@@ -169,7 +168,7 @@ const getCountryData = function (country) {
 // });
 
 btn.addEventListener('click', function () {
-  getCountryData('portugal');
+  //getCountryData('portugal');
 });
 
 //En esta version hay mucho codigo duplicado con los response, la version de arriba es la optimizada
@@ -311,11 +310,8 @@ Promise.reject(new Error('Problem')).catch(x => console.log(x));
 const whereAmI = function () {
   getPosition()
     .then(pos => {
-      console.log(pos.coords);
       const { latitude: lat, longitude: lng } = pos.coords;
 
-      //      const { lat = latitude, lng = longitude } = pos.coords;
-      console.log(lat, lng);
       return fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
     })
     .then(response => {
@@ -336,7 +332,7 @@ const whereAmI = function () {
       Your are in ${data.city}, ${data.country}
       `;
       console.log(msg);
-      // console.log(data.country);
+      console.log(data.country);
 
       getCountryData(data.country);
       //getCountryData(data.country);
@@ -352,6 +348,8 @@ const whereAmI = function () {
 
 btn.addEventListener('click', whereAmI);
 
+// ------------------- 260 -------------------
+
 const getPosition = function () {
   return new Promise(function (resolve, reject) {
     // Esta es la manera sin acortar
@@ -366,4 +364,4 @@ const getPosition = function () {
 
 getPosition().then(pos => console.log(pos));
 
-getCountryData('sd32thsh');
+//getCountryData(pos.country);
