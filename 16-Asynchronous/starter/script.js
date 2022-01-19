@@ -153,7 +153,7 @@ const getCountryData = function (country) {
     .catch(err => {
       //este catch es como el handle en el then, pero global. Para cuando est'an encadeandos.
       console.error(`${err}`);
-      renderError(`Something went wrong ${err.message}. Try again!`);
+      renderError(`Something went wrong ${err.message} 🔥. Try again!`);
     })
     .finally(() => {
       // Siempre se ejecutara pase lo que pase(error o no)
