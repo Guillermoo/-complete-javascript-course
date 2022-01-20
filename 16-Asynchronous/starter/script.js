@@ -25,7 +25,7 @@ const renderCountry = function (data, className = '') {
 
   countriesContainer.insertAdjacentHTML('beforeend', html);
 
-  countriesContainer.style.opacity = 1;
+  // countriesContainer.style.opacity = 1;
 };
 
 const renderError = function (msg) {
@@ -158,6 +158,7 @@ const getCountryData = function (country) {
     })
     .finally(() => {
       // Siempre se ejecutara pase lo que pase(error o no)
+      console.log('Opacitiy deberia cambiar');
       countriesContainer.style.opacity = 1;
     });
 };
@@ -365,7 +366,7 @@ getPosition().then(pos => console.log(pos));
 
  */
 
-const getPosition = function () {
+/* const getPosition = function () {
   return new Promise(function (resolve, reject) {
     // Esta es la manera sin acortar
     // navigator.geolocation.getCurrentPosition(
@@ -377,25 +378,60 @@ const getPosition = function () {
   });
 };
 
-const whereAmI = async function (country) {
-  //Geolocation
-  const pos = await getPosition();
-  const { latitude: lat, longitude: lng } = pos.coords;
+const whereAmI = async function () {
+  try {
+    //Geolocation
+    const pos = await getPosition();
+    const { latitude: lat, longitude: lng } = pos.coords;
 
-  //Reverse GeoCoding
-  const resGeo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
-  const dataGeo = await resGeo.json();
+    //Reverse GeoCoding
+    const resGeo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
 
-  // fetch(`https://restcountries.com/v2/name/${country}`).then(res =>
-  //   console.log(res)
-  // );
-  //Country Data
-  // Lo de arriba es lo mismo pero sin await
-  const res = await fetch(
-    `https://restcountries.com/v2/name/${dataGeo.country}`
-  );
-  const data = await res.json();
-  renderCountry(data[0]);
+    if (!resGeo.ok) throw new Error('Problen getting location data');
+
+    const dataGeo = await resGeo.json();
+
+    // fetch(`https://restcountries.com/v2/name/${country}`).then(res =>
+    //   console.log(res)
+    // );
+    //Country Data
+    // Lo de arriba es lo mismo pero sin await
+    const res = await fetch(
+      `https://restcountries.com/v2/name/${dataGeo.country}`
+    );
+
+    if (!res.ok) throw new Error('Problen getting country');
+
+    const data = await res.json();
+    renderCountry(data[0]);
+
+    return `You are in ${dataGeo.city}, ${dataGeo.country}`;
+  } catch (err) {
+    console.error(err.message);
+    renderError(`Something went wrong  ${err.message}`);
+
+    //Reject promise returned from async function
+    throw err;
+  }
 };
 
-whereAmI();
+// Si llamamos asi a la funcion
+// const city = whereAmI();
+// console.log(city); //Promise {<pending>}
+
+// Para llamar a la funcion y obtener el valor asincronamente
+// Pero es mezcla async y promises, abajo la manera de solo await
+// whereAmI()
+//   .then(city => console.log(city))
+//   .catch(err => console.err(`${err.message}`))
+//   .finally(() => (countriesContainer.style.opacity = 1));
+
+//Esta es la manerea de gestioanr async pillando errores.
+(async function () {
+  try {
+    const city = await whereAmI();
+    console.log(`${city}`);
+  } catch (err) {
+    console.err(`${err.message}`);
+  }
+})(); */
