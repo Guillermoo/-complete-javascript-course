@@ -124,6 +124,7 @@ const createImage = function (imgPath) {
 //console.log(createImage('img/img-1.jpg'));
 
 // ---- (4) -----
+// Aqui es donde el promise es consumido
 createImage('img/img-1.jpg')
   .then(img => {
     imageWaiting = img;
@@ -166,25 +167,60 @@ To test, turn off the 'loadNPause' function
 
 GOOD LUCK 😀 */
 
-const createImage = function (imgPath) {
-  const img = document.createElement('img');
-  img.src = imgPath;
-  return img;
+// const createImage = function (imgPath) {
+//   const img = document.createElement('img');
+//   img.src = imgPath;
+//   console.log(`1: ${img}`);
+//   return img;
+// };
+
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    // No ponemos reject porqeu el temporizador nunca va a fallar
+    setTimeout(resolve, seconds * 1000);
+  });
 };
 
-const loadNPause = async function (imgPath) {
-  try {
-    const img = await createImage(imgPath);
+const createImage = function (imgPath) {
+  return new Promise(function (resolve, reject) {
+    const img = document.createElement('img');
+    img.src = imgPath;
 
-    console.log(img);
-    // const loaded = await img.onload();
+    img.addEventListener('load', function () {
+      imagesContainer.append(img);
+
+      resolve(img);
+    });
+    img.addEventListener('error', function () {
+      reject(new Error('Image not found'));
+    });
+  });
+};
+
+const loadNPause = async function () {
+  try {
+    //Image 1
+    let img = await createImage('img/img-1.jpg');
+    console.log('Image 1 loaded');
+
+    await wait(2);
+
+    img.style.display = 'none';
+
+    // Image 2
+    img = await createImage('img/img-2.jpg');
+    console.log('Image 2 loaded');
+
+    await wait(2);
+
+    img.style.display = 'none';
 
     // if (!loaded.ok) throw new Error('Error cargando la imagen');
 
-    imagesContainer.append(img);
+    //return img;
   } catch (err) {
     console.error(err);
   }
 };
 
-loadNPause('img/img-1s.jpg');
+loadNPause();
