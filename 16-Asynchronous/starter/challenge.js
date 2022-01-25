@@ -197,6 +197,20 @@ const createImage = function (imgPath) {
   });
 };
 
+// Array de promises async
+const loadAll = async function (imgArr) {
+  try {
+    const imgs = await Promise.all(imgArr.map(img => createImage(img)));
+
+    imgs.forEach(img => img.classList.add('parallel'));
+
+    console.log(imgs);
+    //imgs.forEach(img => console.log(img));
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const loadNPause = async function () {
   try {
     //Image 1
@@ -223,4 +237,6 @@ const loadNPause = async function () {
   }
 };
 
-loadNPause();
+//loadNPause();
+
+loadAll(['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']);
