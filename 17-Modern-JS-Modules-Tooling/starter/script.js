@@ -46,8 +46,13 @@ const lastPost2 = await getLastPost();
 console.log(lastPost2);
 // Conclusion, mejor no usar el await fuera de un async */
 
+import add, { cart } from './shoppingCart.js'; //default export
+add('pizza', 2);
+add('bread', 5);
+add('apples', 4);
+
 // ----------- Patron module ----------------
-/* const ShoppingCart2 = (function () {
+const ShoppingCart2 = (function () {
   const cart = [];
   const shippingCost = 10;
   const totalPrice = 237;
@@ -74,9 +79,10 @@ console.log(lastPost2);
 ShoppingCart2.addToCart('apple', 4);
 ShoppingCart2.addToCart('pizza', 2);
 
-console.log(ShoppingCart2.shippingCost); // undefined, no se puede acceder porque la funcion no permite. Cosas de los enclousures */
+console.log(ShoppingCart2.shippingCost); // undefined, no se puede acceder porque la funcion no permite. Cosas de los enclousures
 
-import cloneDeep from './node_modules/lodash-es/cloneDeep.js';
+// import cloneDeep from './node_modules/lodash-es/cloneDeep.js';
+import cloneDeep from 'lodash-es';
 
 const state = {
   cart: [
@@ -94,3 +100,7 @@ state.user.loggedIn = false;
 console.log(stateClone);
 
 console.log(stateDeepClone);
+
+if (module.hot) {
+  module.hot.accept();
+}
