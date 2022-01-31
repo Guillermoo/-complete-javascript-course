@@ -1,9 +1,13 @@
-13031
+13037
 140/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/dist/index.672d4772.js.map1643381649872212482 0
-136/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/dist/index.8cfc62b9.js1643383952589065617 0
+140/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/dist/index.29dc2e3e.js.map1643643906864388478 0
+136/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/dist/index.8cfc62b9.js1643643860769089358 0
 140/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/dist/index.d2ef1cff.js.map1643642260200312347 0
 136/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/dist/index.d2ef1cff.js1643642260193635752 0
-118/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/dist1643642260200312347 1
+136/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/dist/index.29dc2e3e.js1643643906854381655 0
+140/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/dist/index.22f03d7c.js.map1643643602660469420 0
+140/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/dist/index.b083c337.js.map1643643368410159834 0
+118/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/dist1643643906864388478 1
 124/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/index.html1643642199172120240 0
 160/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/postcss-value-parser/package.json1643381347063603585 0
 157/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/postcss-value-parser/README.md1643381347080269560 0
@@ -3397,7 +3401,7 @@
 159/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/css-tree/lib/convertor/create.js1643381347363591107 0
 155/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/core-js/es/string/replace.js1643381348036896442 0
 150/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/is-string/test/index.js1643381346963607758 0
-129/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/dist/index.html1643642260193635752 0
+129/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/dist/index.html1643643906854381655 0
 169/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/core-js/internals/regexp-sticky-helpers.js1643381348033563246 0
 159/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/core-js/features/array/values.js1643381348096893966 0
 160/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/@parcel/utils/lib/PromiseQueue.js1643381347496918895 0
@@ -5738,7 +5742,7 @@
 150/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/mdn-data/css/units.json1643381347430255001 0
 155/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/@parcel/workers/src/Trace.js1643381347410255833 0
 158/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/css-tree/lib/syntax/node/CDC.js1643381347226930126 0
-140/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/dist/index.8cfc62b9.js.map1643383952595732242 0
+140/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/dist/index.8cfc62b9.js.map1643643860779098121 0
 186/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/core-js/internals/object-get-own-property-names-external.js1643381348013564072 0
 167/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/@parcel/node-resolver-core/lib/_empty.js1643381346833613210 0
 163/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/core-js/features/regexp/to-string.js1643381348083561183 0
@@ -6897,6 +6901,7 @@
 146/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/lodash-es/sortBy.js1643294835475479000 0
 169/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/core-js/features/array/virtual/iterator.js1643381347990231707 0
 167/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/es-abstract/helpers/getIteratorMethod.js1643381347713576549 0
+136/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/dist/index.b083c337.js1643643368396816227 0
 152/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/msgpackr/rollup.config.js1643381347233596515 0
 157/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/es-abstract/2019/DateString.js1643381347646912654 0
 168/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/@babel/core/node_modules/semver/README.md1643381347120267896 0
@@ -7112,6 +7117,7 @@
 165/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/es-abstract/2015/TestIntegrityLevel.js1643381347890235867 0
 163/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/es-abstract/2016/IsDataDescriptor.js1643381347763574467 0
 152/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/domhandler/lib/index.d.ts1643381347106935118 0
+136/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/dist/index.22f03d7c.js1643643602647124201 0
 154/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/@types/parse-json/README.md1643381346763616144 0
 148/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/is-arrayish/README.md1643381346803614467 0
 149/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/domhandler/lib/node.js1643381346896943887 0
@@ -8633,7 +8639,7 @@
 158/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/es-abstract/2015/SecFromTime.js1643381347863570309 0
 157/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/core-js/stable/number/index.js1643381347970232538 0
 159/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/core-js/stable/string/italics.js1643381347986898512 0
-123/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/script.js1643384168844467022 0
+123/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/script.js1643643875738226455 0
 145/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/filelist/README.md1643381346806947661 0
 149/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/css-tree/lib/convertor1643381347563582787 1
 157/home/guillermo/Documents/gitProyectos/LocalSites/complete-javascript-course/17-Modern-JS-Modules-Tooling/starter/node_modules/core-js/stable/string/small.js1643381348050229226 0

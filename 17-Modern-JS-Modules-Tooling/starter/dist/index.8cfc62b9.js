@@ -520,9 +520,6 @@ function hmrAcceptRun(bundle, id) {
 
 },{}],"6rimH":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-// import cloneDeep from './node_modules/lodash-es/cloneDeep.js';
-var _lodashEs = require("lodash-es");
-var _lodashEsDefault = parcelHelpers.interopDefault(_lodashEs);
 // Importing module
 // import {
 //   addToCart,
@@ -568,7 +565,15 @@ console.log(lastPost); // Nos devovlera un promise, lo siguiente lo soluciona
 //Esta es la mejor opcion
 const lastPost2 = await getLastPost();
 console.log(lastPost2);
-// Conclusion, mejor no usar el await fuera de un async */ // ----------- Patron module ----------------
+// Conclusion, mejor no usar el await fuera de un async */ var _shoppingCartJs = require("./shoppingCart.js"); //default export
+var _shoppingCartJsDefault = parcelHelpers.interopDefault(_shoppingCartJs);
+// import cloneDeep from './node_modules/lodash-es/cloneDeep.js';
+var _lodashEs = require("lodash-es");
+var _lodashEsDefault = parcelHelpers.interopDefault(_lodashEs);
+_shoppingCartJsDefault.default('pizza', 2);
+_shoppingCartJsDefault.default('bread', 5);
+_shoppingCartJsDefault.default('apples', 4);
+// ----------- Patron module ----------------
 const ShoppingCart2 = function() {
     const cart = [];
     const shippingCost = 10;
@@ -617,11 +622,23 @@ const stateClone = Object.assign({
 }, state);
 const stateDeepClone = _lodashEsDefault.default(state);
 state.user.loggedIn = false;
-console.log(stateClone);
-console.log(stateDeepClone);
+// console.log(stateClone);
+// console.log(stateDeepClone);
 if (module.hot) module.hot.accept();
+class Person {
+    #greeting = 'Hey';
+    constructor(name){
+        this.name = name;
+        console.log(`${this.greeting}, ${this.name}`);
+    }
+}
+const jonas = new Person('Jonas');
+console.log(_shoppingCartJs.cart.find((el)=>el.quantity >= 2
+));
+Promise.resolve('TEST').then((x)=>console.log(x)
+); //import 'core-js/stable';
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","lodash-es":"bXNwz"}],"gkKU3":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","lodash-es":"bXNwz","./shoppingCart.js":"l6bJl"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -24505,6 +24522,42 @@ parcelHelpers.defineInteropFlag(exports);
     };
 }
 exports.default = getView;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l6bJl":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "cart", ()=>cart
+);
+parcelHelpers.export(exports, "addToCart", ()=>addToCart
+);
+parcelHelpers.export(exports, "totalPrice", ()=>totalPrice
+);
+parcelHelpers.export(exports, "totalQuantity", ()=>totalQuantity
+);
+// Exporting module
+console.log('Exporting module');
+// Blocking code
+console.log('Start fetching users');
+await fetch('https://jsonplaceholder.typicode.com/users');
+console.log('Finish fethching');
+const shippingCost = 10;
+const cart = [];
+const addToCart = function(product, quantity) {
+    cart.push({
+        product,
+        quantity
+    });
+    console.log(`${quantity} ${product} added to the cart`);
+};
+const totalPrice = 238;
+const totalQuantity = 23;
+exports.default = function(product, quantity) {
+    cart.push({
+        product,
+        quantity
+    });
+    console.log(`${quantity} ${product} added to the cart`);
+};
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["jWVwA","6rimH"], "6rimH", "parcelRequire7e89")
 
