@@ -27,15 +27,12 @@ const controlRecipes = async function () {
 
     //recipeContainer.insertAdjacentHTML = ('afterbegin', markup);
   } catch (err) {
-    alert(err);
+    //alert(err);
+    recipeView.renderError();
   }
 };
 
-//showRecipe();
-
-['hashchange', 'load'].forEach(ev =>
-  window.addEventListener(ev, controlRecipes)
-);
-
-// window.addEventListener('hashchange', showRecipe);
-// window.addEventListener('load', showRecipe);
+const init = function () {
+  recipeView.addHandlerRender(controlRecipes);
+};
+init();
