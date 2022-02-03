@@ -92,7 +92,7 @@ class RecipeView extends View {
                 .join('')}
               </ul>
             </div>
-    
+            <div>
               <h2 class="heading--2">How to cook it</h2>
               <p class="recipe__directions-text">
                 This recipe was carefully designed and tested by

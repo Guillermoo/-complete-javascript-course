@@ -13,6 +13,38 @@ export default class View {
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
+  update(data) {
+    // if (!data || (Array.isArray(data) && data.length === 0))
+    //   return this.renderError();
+
+    this._data = data;
+
+    //Clonamos todo el markup creado.
+    const newMarkup = this._generateMarkup();
+
+    const newDOM = document.createRange().createContextualFragment(newMarkup);
+    const newElements = Array.from(newDOM.querySelectorAll('*'));
+    const curElements = Array.from(this._parentElement.querySelectorAll('*'));
+
+    newElements.forEach((newEl, i) => {
+      const curEl = curElements[i];
+
+      if (
+        !newEl.isEqualNode(curEl) &&
+        newEl.firstChild?.nodeValue.trim() !== '' //Solo funciona si el nodo tiene solo texto
+      ) {
+        //console.log(newEl);
+        curEl.textContent = newEl.textContent;
+      }
+
+      //Update changed ATTRIBUTES. Si no se cambia el data no podra subir o bajar el contador
+      if (!newEl.isEqualNode(curEl))
+        Array.from(newEl.attributes).forEach(attr =>
+          curEl.setAttribute(attr.name, attr.value)
+        );
+    });
+  }
+
   _clear() {
     this._parentElement.innerHTML = '';
   }
