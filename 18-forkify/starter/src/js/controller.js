@@ -43,7 +43,7 @@ const controlSearchResuls = async function () {
     const query = searchView.getQuery();
     if (!query) return;
 
-    // Load search results
+    // Load search results. Carga en el estado los valores de la busqueda
     await model.loadSearchResults(query);
 
     // Render results. Con paginacion!!
@@ -72,10 +72,22 @@ const controlServings = function (newServings) {
   recipeView.update(model.state.recipe);
 };
 
+const controlAddBookmark = function () {
+  console.log(model.state.recipe.id);
+  console.log(model.state.recipe.bookmarked);
+  if (!model.state.recipe.bookmarked) model.addBookmark(model.state.recipe);
+  else model.deleteBookmark(model.state.recipe.id);
+
+  //model.addBookmark(model.state.recipe);
+  console.log(model.state.recipe);
+  recipeView.update(model.state.recipe);
+};
+
 const init = function () {
   recipeView.addHandlerRender(controlRecipes);
   searchView.addHandlerSearch(controlSearchResuls);
   paginationView.addHandlerClick(controlPagination);
   recipeView.addHandlerUpdateServings(controlServings);
+  recipeView.addHandlerAddBookmark(controlAddBookmark);
 };
 init();
