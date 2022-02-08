@@ -16,6 +16,10 @@ class PaginationView extends View {
     });
   }
 
+  _generateTotalPagesMarkup() {
+    return 'This is the number of pages';
+  }
+
   _generateMarkup() {
     const currentPage = this._data.page;
 
@@ -23,23 +27,28 @@ class PaginationView extends View {
       this._data.results.length / this._data.resultsPerPage
     );
 
-    //Page 1, there are other pages
+    let markUp = `
+      <div>Page ${currentPage} of ${numPages}</div>
+    `;
+
+    //First page 1, there are other pages
     if (currentPage === 1 && numPages > 1) {
-      return `
-        <button data-goto="${
-          currentPage + 1
-        }" class="btn--inline pagination__btn--next">
-            <span>Page ${currentPage + 1}</span>
-            <svg class="search__icon">
-                <use href="${icons}#icon-arrow-right"></use>
-            </svg>
-        </button>
-          `;
+      markUp += `
+      <button data-goto="${
+        currentPage + 1
+      }" class="btn--inline pagination__btn--next">
+      <span>Page ${currentPage + 1}</span>
+      <svg class="search__icon">
+      <use href="${icons}#icon-arrow-right"></use>
+      </svg>
+      </button>
+      `;
+      return markUp;
     }
 
     //Last page
     if (currentPage === numPages && numPages > 1) {
-      return `
+      markUp += `
       <button data-goto="${
         currentPage - 1
       }" class="btn--inline pagination__btn--prev">
@@ -49,10 +58,11 @@ class PaginationView extends View {
         <span>Page ${currentPage - 1}</span>
     </button>
       `;
+      return markUp;
     }
     //Other page
     if (currentPage < numPages) {
-      return `
+      markUp += `
         <button data-goto="${
           currentPage - 1
         }" class="btn--inline pagination__btn--prev">
@@ -70,6 +80,7 @@ class PaginationView extends View {
             </svg>
         </button>
         `;
+      return markUp;
     }
 
     //Page 1, there are NO other pages

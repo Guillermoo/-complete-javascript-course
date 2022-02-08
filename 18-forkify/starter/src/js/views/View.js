@@ -3,6 +3,15 @@ import icons from 'url:../../img/icons.svg'; // Parcel 1
 export default class View {
   _data;
 
+  /**
+   * Render the received object to the DOM
+   * @param {*Object | Object[]} data The data to be rendered  (e.g. recipe)
+   * @param {boolean} [render=true] If false, create markup string instead of rendering to the DOM
+   * @returns {undefined | string} A markup string is returned if render=false
+   * @this {Object} View instance
+   * @author Joans Schmedtmann
+   * @todo Finish implementation
+   */
   render(data, render = true) {
     if (!data || (Array.isArray(data) && data.length === 0))
       return this.renderError();
@@ -25,7 +34,7 @@ export default class View {
     //Clonamos todo el markup creado.
     const newMarkup = this._generateMarkup();
 
-    const newDOM = document.createRange().createContextualFragment(newMarkup);
+    const newDOM = document.createRange().createContextualFragment(nediwMarkup);
     const newElements = Array.from(newDOM.querySelectorAll('*'));
     const curElements = Array.from(this._parentElement.querySelectorAll('*'));
 
