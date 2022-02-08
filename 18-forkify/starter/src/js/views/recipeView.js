@@ -82,7 +82,9 @@ class RecipeView extends View {
                 </div>
               </div>
     
-              <div class="recipe__user-generated">
+              <div class="recipe__user-generated ${
+                this._data.key ? '' : 'hidden'
+              }">
                 <svg>
                   <use href="${icons}#icon-user"></use>
                 </svg>
@@ -103,7 +105,7 @@ class RecipeView extends View {
                 .join('')}
               </ul>
             </div>
-            <div>
+            <div class="recipe__directions">
               <h2 class="heading--2">How to cook it</h2>
               <p class="recipe__directions-text">
                 This recipe was carefully designed and tested by
