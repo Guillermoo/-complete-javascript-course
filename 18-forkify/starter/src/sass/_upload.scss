@@ -58,13 +58,13 @@
       font-weight: 600;
       color: inherit;
     }
-
     & input {
       font-size: 1.5rem;
       padding: 0.8rem 1rem;
       border: 1px solid #ddd;
       border-radius: 0.5rem;
       transition: all 0.2s;
+      flex: 0 1 100%;
 
       &::placeholder {
         color: $color-grey-light-3;
