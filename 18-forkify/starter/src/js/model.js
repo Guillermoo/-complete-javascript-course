@@ -15,7 +15,6 @@ export const state = {
 
 const createRecipeObject = function (data) {
   const { recipe } = data.data;
-
   return {
     id: recipe.id,
     title: recipe.title,
@@ -25,18 +24,20 @@ const createRecipeObject = function (data) {
     servings: recipe.servings,
     cookingTime: recipe.cooking_time,
     ingredients: recipe.ingredients,
+
     ...(recipe.key && { key: recipe.key }), //truco chungo para anadir el key si existe, si no no.
   };
 };
 
 export const loadRecipe = async function (id) {
   try {
-    const data = await AJAX(`${API_URL}/${id}`);
+    const data = await AJAX(`${API_URL}/${id}?key=${KEY}`);
     state.recipe = createRecipeObject(data);
+
     // Asignar la receta como bookmarked si lo estaba
-    if (state.bookmarks.some(bookmark => bookmark.id === id))
+    if (state.bookmarks.some(bookmark => bookmark.id === id)) {
       state.recipe.bookmarked = true;
-    else state.recipe.bookmarked = false;
+    } else state.recipe.bookmarked = false;
   } catch (err) {
     console.error(`${err} 💥💥💥💥`);
     throw err;
@@ -84,18 +85,17 @@ export const updateServings = function (newServings) {
   state.recipe.servings = newServings;
 };
 
-const persisteBookmarks = function () {
+const persistBookmarks = function () {
   localStorage.setItem('bookmarks', JSON.stringify(state.bookmarks));
 };
 
 export const addBookmark = function (recipe) {
   // Add bookmar
   state.bookmarks.push(recipe);
-
   // Mark current recipe as bookmark
   if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
 
-  persisteBookmarks();
+  persistBookmarks();
 };
 
 export const deleteBookmark = function (id) {
@@ -103,9 +103,11 @@ export const deleteBookmark = function (id) {
   state.bookmarks.splice(index, 1);
 
   // Mark current recipe as NOT bookmarked
-  if (id === state.recipe.id) state.recipe.bookmarked = false;
-
-  persisteBookmarks();
+  if (id === state.recipe.id) {
+    state.recipe.bookmarked = false;
+    state.recipe.key = '';
+  }
+  persistBookmarks();
 };
 
 const init = function () {

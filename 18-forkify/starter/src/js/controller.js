@@ -29,7 +29,6 @@ const controlRecipes = async function () {
 
     // 2( loading recipe)
     await model.loadRecipe(id); //model cambia el estado de recipe
-
     // 3) rendering recipe
     recipeView.render(model.state.recipe);
 
@@ -80,9 +79,7 @@ const controlAddBookmark = function () {
   if (!model.state.recipe.bookmarked) model.addBookmark(model.state.recipe);
   else model.deleteBookmark(model.state.recipe.id);
 
-  //model.addBookmark(model.state.recipe);
   recipeView.update(model.state.recipe);
-
   bookmarksView.render(model.state.bookmarks);
 };
 
