@@ -33,7 +33,6 @@ export const loadRecipe = async function (id) {
   try {
     const data = await AJAX(`${API_URL}/${id}`);
     state.recipe = createRecipeObject(data);
-
     // Asignar la receta como bookmarked si lo estaba
     if (state.bookmarks.some(bookmark => bookmark.id === id))
       state.recipe.bookmarked = true;
@@ -61,6 +60,7 @@ export const loadSearchResults = async function (query) {
       };
     });
     state.search.page = 1;
+    console.log(state.search.results);
   } catch (err) {
     console.error(`${err} 💥💥💥💥`);
     throw err;
