@@ -61,7 +61,6 @@ export const loadSearchResults = async function (query) {
       };
     });
     state.search.page = 1;
-    console.log(state.search.results);
   } catch (err) {
     console.error(`${err} 💥💥💥💥`);
     throw err;
